@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 24,
+    marginVertical: 18,
   },
   wrapper: {
     flex: 1,
@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
     flex: 5,
     textAlign: 'center',
     color: '#28235F',
-    fontWeight: '700',
     fontFamily: 'OpenSans-Bold',
     fontSize: 16,
   },

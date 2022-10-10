@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Data from '../../../feed-data.json';
-
+import {useNavigation} from '@react-navigation/native';
 type NewsItemInterface = {
   _id: string;
   isLiked: boolean;
@@ -26,6 +26,7 @@ type NewsItemInterface = {
 
 export const NewsFeedListing = () => {
   const route = useRoute<any>();
+  const navigation = useNavigation<any>();
   const {data} = route.params;
   const [posts, setPosts] = useState<NewsItemInterface[]>([]);
 
@@ -79,7 +80,10 @@ export const NewsFeedListing = () => {
         <Text style={{fontSize: 10, fontFamily: 'Montserrat-Medium'}}>
           {item.created_At.slice(0, 10)}
         </Text>
-        <Text style={style.link}>Więcej</Text>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('NewsDetails', {id: item._id})}>
+          <Text style={style.link}>Więcej</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

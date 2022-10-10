@@ -62,6 +62,7 @@ export const NewsFeedPostScreen = () => {
 
   const handleCreatePost = () => {
     Keyboard.dismiss();
+
     if (validateInputs()) {
       let data = {
         _id: String(new Date()),
@@ -75,8 +76,8 @@ export const NewsFeedPostScreen = () => {
         created_At: String(new Date()),
         images: [],
       };
-
-      navigation.navigate('Newsfeed', {data});
+      setForm({title: {value: ''}, desc: {value: ''}});
+      setTimeout(() => navigation.navigate('Newsfeed', {data}), 1000);
     }
   };
 

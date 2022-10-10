@@ -1,4 +1,5 @@
-import React from 'react';
+import {useRoute} from '@react-navigation/native';
+import React, {useState, useEffect} from 'react';
 import {
   Text,
   View,
@@ -24,10 +25,38 @@ type NewsItemInterface = {
 };
 
 export const NewsFeedListing = () => {
-  const posts: NewsItemInterface[] = Data;
+  const route = useRoute<any>();
+  const {data} = route.params;
+  const [posts, setPosts] = useState<NewsItemInterface[]>([]);
+
+  useEffect(() => {
+    loadMoreNews();
+  }, []);
+
+  useEffect(() => {
+    if (data) {
+      setPosts([data, ...posts]);
+    }
+  }, [data]);
+
+  const loadMoreNews = () => {
+    let temp: NewsItemInterface[] = [...posts];
+    setTimeout(
+      () =>
+        Data.map((item, index) => {
+          if (!posts && index < 10) {
+            temp.push(item);
+          } else if (index > posts.length - 1 && index < posts.length + 9) {
+            temp.push(item);
+          }
+          setPosts(temp);
+        }),
+      1000,
+    );
+  };
 
   const NewsItem = ({item}: {item: NewsItemInterface}) => (
-    <View style={{marginBottom: 30}}>
+    <View style={{marginBottom: 30}} testID="NewsFeedPost">
       <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
         <Image style={style.avatar} source={{uri: item.author.avatar}} />
         <Text style={style.heading}>{item.author.name}</Text>
@@ -61,13 +90,11 @@ export const NewsFeedListing = () => {
         keyExtractor={(item: NewsItemInterface) => item._id}
         numColumns={1}
         data={posts}
-        maxToRenderPerBatch={1}
-        windowSize={1}
-        initialNumToRender={10}
+        initialNumToRender={5}
+        windowSize={10}
         removeClippedSubviews={true}
-        // onEndReached={}
         onEndReachedThreshold={0.2}
-        // ListFooterComponent={}
+        onEndReached={loadMoreNews}
         renderItem={NewsItem}
       />
     </View>

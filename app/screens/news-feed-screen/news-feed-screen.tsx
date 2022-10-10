@@ -10,7 +10,10 @@ export const NewsFeedScreen = () => {
     <View style={Wrapper.container}>
       <Header text="Newsfeed" />
       <Searchbar />
-      <ScrollView horizontal style={{flex: 1, marginTop: 20}}>
+      <ScrollView
+        horizontal
+        style={{flex: 1, marginTop: 20}}
+        showsHorizontalScrollIndicator={false}>
         <NewsFeedCategory text="Tablica" active />
         <NewsFeedCategory text="Wydarzenia" />
         <NewsFeedCategory text="Artykuły" />

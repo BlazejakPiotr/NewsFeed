@@ -1,22 +1,24 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NewsFeedPostScreen, NewsFeedScreen} from './app/screens';
-import {Navbar} from './app/components/navbar/navbar';
 
-const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator
+      <Tab.Navigator
         screenOptions={{
           headerShown: false,
         }}>
-        <Stack.Screen name="Newsfeed" component={NewsFeedScreen} />
-        <Stack.Screen name="Postfeed" component={NewsFeedPostScreen} />
-      </Stack.Navigator>
-      <Navbar />
+        <Tab.Screen
+          name="Newsfeed"
+          component={NewsFeedScreen}
+          initialParams={{data: null}}
+        />
+        <Tab.Screen name="Postfeed" component={NewsFeedPostScreen} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 };
